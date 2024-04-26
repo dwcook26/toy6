@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://3awvxhdq2xm7"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_6trpi"]
+[ext_resource type="Texture2D" uid="uid://b8rdpmtsn6jb4" path="res://PNG/Default/blue_body_circle.png" id="1_mbuts"]
+[ext_resource type="Texture2D" uid="uid://da1qttro26eep" path="res://PNG/Default/face_a.png" id="3_tml7u"]
+[ext_resource type="AudioStream" uid="uid://eksh6bmumlh2" path="res://jump.mp3" id="3_yqa7p"]
+[ext_resource type="AudioStream" uid="uid://dfmjn8qinmt12" path="res://land.mp3" id="4_ntdq5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hdq2h"]
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_6trpi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_mbuts")
+
+[node name="Face" type="Sprite2D" parent="Sprite2D"]
+texture = ExtResource("3_tml7u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1.2, 1.2)
+shape = SubResource("CircleShape2D_hdq2h")
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_yqa7p")
+
+[node name="LandSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_ntdq5")
+volume_db = 6.933
+
+[node name="coyoteTimer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
+[node name="jumpTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="timeout" from="coyoteTimer" to="." method="_on_coyote_timer_timeout"]
+[connection signal="timeout" from="jumpTimer" to="." method="_on_jump_timer_timeout"]
